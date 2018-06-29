@@ -2,6 +2,7 @@
   <component name="FileTypeManager" version="17">
     <extensionMap>
       <mapping pattern="HomeMiddleware" type="JavaScript" />
+      <mapping pattern=".env_example" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
