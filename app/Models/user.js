@@ -19,6 +19,8 @@ module.exports = function(sequelize , Sequelize){
         password: {
             notEmpty: true,
             type: Sequelize.STRING
-        }
+        },
+        created_at: Sequelize.DATE,
+        updated_at: Sequelize.DATE,
     })
 };

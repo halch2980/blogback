@@ -27,7 +27,9 @@ module.exports = function(sequelize , Sequelize){
         cat_id: {
             notEmpty: true,
             type: Sequelize.INTEGER
-        }
+        },
+        created_at: Sequelize.DATE,
+        updated_at: Sequelize.DATE,
     });
 
 };
