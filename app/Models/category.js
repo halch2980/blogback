@@ -11,6 +11,8 @@ module.exports = function(sequelize , Sequelize){
         title: {
             type: Sequelize.STRING,
             notEmpty: true
-        }
+        },
+        created_at: Sequelize.DATE,
+        updated_at: Sequelize.DATE,
     })
 };

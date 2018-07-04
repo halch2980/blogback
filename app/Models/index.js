@@ -29,6 +29,12 @@ fs
     });
 
 
+Post.belongsTo(User, {foreignKey: 'id', targetKey: 'user_id'});
+Post.belongsTo(Categories, {foreignKey: 'id', targetKey: 'cat_id'});
+
+
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
