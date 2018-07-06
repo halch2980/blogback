@@ -1,10 +1,12 @@
 require ('dotenv').config('./env');
-var express = require('express');
-var app = express();
+
+const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 
 app.use(require('./routes/web.js'));

@@ -2,25 +2,37 @@ module.exports = function(sequelize , Sequelize){
     const options = {
         timestamps: false
     };
-    const Category = sequelize.define('category', {
+    const User = sequelize.define('users', {
+
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        mail: {
+
+        email: {
             notEmpty: true,
             type: Sequelize.STRING
         },
+
         name: {
             notEmpty: true,
             type: Sequelize.STRING
         },
+
         password: {
             notEmpty: true,
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            get(){
+
+            }
         },
+
         created_at: Sequelize.DATE,
+
         updated_at: Sequelize.DATE,
-    })
+
+    }, options);
+
+    return User;
 };

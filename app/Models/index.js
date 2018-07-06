@@ -1,7 +1,7 @@
 const fs = require('file-system');
-const path = require("path");
+const path = require('path');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('blog', process.env.DB_USER, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize('blog', process.env.DB_USER, process.env.DB_PASS, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     operatorsAliases: false,
@@ -14,26 +14,18 @@ const sequelize = new Sequelize('blog', process.env.DB_USER, process.env.DB_PASS
     },
 });
 
-
 const db = {};
 
 fs
     .readdirSync(__dirname)
     .filter(function (file) {
-        return(file.indexOf(".") !== 0) && (file !== "index.js");
+        return(file.indexOf(".") !== 0) && (file !== "index.js") ;
     })
     .forEach(function (file) {
         const model = sequelize.import(path.join(__dirname, file));
         db[model.name] = model;
-    
+
     });
-
-
-Post.belongsTo(User, {foreignKey: 'id', targetKey: 'user_id'});
-Post.belongsTo(Categories, {foreignKey: 'id', targetKey: 'cat_id'});
-
-
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

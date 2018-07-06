@@ -1,16 +1,25 @@
 var express = require('express');
 var router = express.Router();
 var Kernel = require('../app/Kernel');
-
-
-const { validateBody, schemas } = require('../app/Validators/userValidator');
+var jwt = require('jsonwebtoken');
 
 
 router.get('/', Kernel.Controllers.HomeController.index);
 router.get('/news', Kernel.Controllers.HomeController.news);
 router.get('/blog', Kernel.Controllers.HomeController.blog);
-router.get('/local/:id', Kernel.Middlewares.IndexMiddleware.index);
-router.post('/reg', validateBody(schemas.registerSchema) ,Kernel.Controllers.HomeController.reg);
+router.post('/registration', Kernel.Controllers.RegistrationController.registration);
+router.get('/prot', Kernel.Middlewares.HomeMiddleware.prot, function (req, res) {
+    jwt.verify(req.token, process.env.JWT, function (err, authData) {
+        if (err){
+            res.sendStatus(403);
+        } else {
+            res.json({
+                text: 'this is protected',
+                authData
+            })
+        }
+    })
+});
 
 
 
