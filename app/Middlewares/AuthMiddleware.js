@@ -27,7 +27,7 @@ const AuthMiddleware = {
                             }
                         });
                         if(user){
-                            res.send(user);
+                            req.auth= user;
                             next();
                         }else{
                             res
