@@ -1,10 +1,9 @@
 const Kernel = {
     Controllers : {
-        HomeController: require('./Controllers/HomeController'),
-        RegistrationController: require('./Controllers/RegistrationController'),
+        AuthController: require('./Controllers/AuthController'),
     },
     Middlewares : {
-        HomeMiddleware: require('./Middlewares/HomeMiddleware'),
+        AuthMiddleware: require('./Middlewares/AuthMiddleware'),
     }
 }
 

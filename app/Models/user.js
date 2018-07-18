@@ -12,14 +12,14 @@ module.exports = function(sequelize , Sequelize){
 
         email: {
             notEmpty: true,
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            unique: true
         },
 
         name: {
             notEmpty: true,
             type: Sequelize.STRING
         },
-
         password: {
             notEmpty: true,
             type: Sequelize.STRING,
