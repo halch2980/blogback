@@ -1,13 +1,15 @@
 const model = require('../Models/index');
 const User = model.users;
 const Joi = require('joi');
-const UserValidator = require('../Validators/userValidator')
+const File = require('file-system');
+const Validator = require('../Validators/Validator');
+
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken') ;
 
 const AuthController = {
     registration: function (req, res) {
-        Joi.validate(req.body, UserValidator.registerSchema, function (err, data) {
+        Joi.validate(req.body,Validator.registerSchema, function (err, data) {
             if (!err){
                 var password = bcrypt.hashSync(data.password, process.env.SALT);
                     User.create({
@@ -17,6 +19,7 @@ const AuthController = {
 
                     }).then(user =>{
                         var token = jwt.sign({name: user.name, email: user.email}, process.env.JWT);
+                        File.mkdirSync('/Users');
                         res.send({
                             token: token,
                             user_data: user,
@@ -36,7 +39,7 @@ const AuthController = {
         });
      },
     login: function (req, res) {
-        Joi.validate(req.body, UserValidator.authorizationSchema,function(err, data){
+        Joi.validate(req.body, Validator.authorizationSchema,function(err, data){
             if(!err)
             {
                 User.findOne({

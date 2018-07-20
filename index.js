@@ -6,8 +6,9 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
-
+app.use('/public/images',express.static('public/images'));
 
 app.use(require('./routes/web.js'));
 
