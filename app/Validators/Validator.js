@@ -22,8 +22,12 @@ const Validator = {
     postSchema: Joi.object().keys({
         title: Joi.string().alphanum().required(),
         desc: Joi.string().alphanum().required(),
-        img: Joi.string(),
         cat_id: Joi.number().integer().required(),
+    }),
+    postUpdateSchema: Joi.object().keys({
+        title: Joi.string().alphanum(),
+        desc: Joi.string().alphanum(),
+        cat_id: Joi.number().integer(),
     })
 };
 

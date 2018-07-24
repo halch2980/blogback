@@ -9,9 +9,7 @@ const AuthMiddleware = {
             {
                 res
                     .status(401)
-                    .send({
-                        message: 'unauthorized'
-                    });
+                    .send({success:false, error: 'unauthorized'});
                 return;
             }
             else
@@ -32,16 +30,12 @@ const AuthMiddleware = {
                         }else{
                             res
                                 .status(401)
-                                .send({
-                                    error:'user not found'
-                                });
+                                .send({success: false, error:'user not found'});
                         }
                     }else{
                         res
                             .status(401)
-                            .send({
-                                error: err
-                            });
+                            .send({success: false, error: err});
                     }
                 });
 

@@ -21,6 +21,7 @@ router.get('/category/:id', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Contr
 
 router.post('/post', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Middlewares.ImageMiddleware.upload.single('img'), Kernel.Controllers.PostController.create);
 router.get('/post/:id',Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.PostController.get);
+router.get('/posts', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.PostController.getAll)
 router.put('/post/:id',Kernel.Middlewares.AuthMiddleware.auth, Kernel.Middlewares.ImageMiddleware.upload.single('img'), Kernel.Controllers.PostController.update);
 router.delete('/post/:id',Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.PostController.delete);
 
@@ -28,6 +29,5 @@ router.get('/category/:id/posts',Kernel.Middlewares.AuthMiddleware.auth, Kernel.
 router.get('/category/:cat_id/post/:post_id', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.PostController.postInCat);
 //-------
 
-//
 
 module.exports = router;

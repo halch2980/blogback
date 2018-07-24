@@ -9,7 +9,6 @@ const PostController = {
     create: function (req, res) {
         if (req.file){
             Joi.validate(req.body, Validator.postSchema, function (err, data) {
-
                 if(!err){
                     var User_id = req.auth;
                     Post.create({
@@ -19,22 +18,22 @@ const PostController = {
                         user_id: User_id.id,
                         cat_id: data.cat_id
                     }).then(post => {
-                        res.send(post)
+                        res.send({success: true, data: post})
                     }).catch(err => {
                         res
                             .status(400)
-                            .send(err);
+                            .send({success: false, error: err});
                     });
                 } else{
                     res
                         .status(400)
-                        .send({error: err});
+                        .send({success: false, error: err});
                 }
             })
         } else{
             res.
                 status(400)
-                send({error: "file not selected"});
+                send({success: false, error: "file not selected"});
         }
 
     },
@@ -45,45 +44,29 @@ const PostController = {
             }
         }).then(post => {
             if (post) {
-                if(req.file){
-                    Joi.validate(req.body, Validator.postSchema, function (err, data) {
-                        if (!err) {
-                            post.update({
-                                title: data.title,
-                                desc: data.desc,
-                                img: req.file.path,
-                                cat_id: data.cat_id
-                            }).then(post =>{
-                                res.send(post);
-                            })
-                        } else {
+                Joi.validate(req.body, Validator.postUpdateSchema, function (err, data) {
+                    if (!err) {
+                        post.update({
+                            title: data.title,
+                            desc: data.desc,
+                            cat_id: data.cat_id,
+                        }).then(post => {
+                            res.send({success: true, data: post})
+                        }).catch(err => {
                             res
                                 .status(400)
-                                .send({error: err});
-                        }
-                    })
-                } else {
-                    Joi.validate(req.body, Validator.postSchema, function (err, data) {
-                        if (!err) {
-                            post.update({
-                                title: data.title,
-                                desc: data.desc,
-                                cat_id: data.cat_id
-                            }).then(post =>{
-                                res.send(post);
-                            })
-                        } else {
-                            res
-                                .status(400)
-                                .send({error: err});
-                        }
-                    })
-                }
-
+                                .send({success: false, error: err});
+                        });
+                    } else {
+                        res
+                            .status(400)
+                            .send({success: false, error: err});
+                    }
+                })
             } else {
                 res
                     .status(400)
-                    .send({error:"no such post"});
+                    .send({success: false, error:"no such post"});
             }
         })
     },
@@ -94,11 +77,11 @@ const PostController = {
             }
         }).then(post => {
             if (post){
-                res.send({post: post});
+                res.send({success: true, post: post});
             } else {
                 res
                     .status(400)
-                    .send({error: "no such post"});
+                    .send({success: false, error: "no such post"});
             }
         })
     },
@@ -111,60 +94,39 @@ const PostController = {
         }).then(post => {
             if (post){
                 post.destroy({force: true});
-                res.send({success: "post deleted",});
+                res.send({success: true, data: "post deleted"});
             } else {
-                res.send({error: "no such post"});
+                res.send({success: false, error: "no such post"});
             }
         })
     },
     postInCat: function (req, res) {
-       Cat.findOne({
+       Post.findOne({
            where:{
-               id: req.params.cat_id
+               id: req.params.post_id
            }
-       }).then(cat =>{
-           if (cat) {
-               Post.findOne({
-                   where:{
-                       id: req.params.post_id
-                   }
-               }).then(post =>{
-                   if (post){
-                       res.send({
-                           category: cat,
-                           post: post
-                       })
-                   } else{
-                       res
-                           .status(400)
-                           .send({error: "no such post in this category"});
-                   }
-               })
-           } else {
+       }).then(post =>{
+           if (post){
+               res.send({ success: true, data: {category: cat, post: post}})
+           } else{
                res
                    .status(400)
-                   .send({error:"no such category"});
+                   .send({success: false, error: "no such post in this category"});
            }
        })
     },
     allInCat: function (req, res) {
-        Cat.findOne({
-            where:{
-                id: req.params.id
+        Post.findAll({
+            where: {
+                cat_id: req.params.id,
             }
-        }).then(cat => {
-            if (cat){
-                Post.findAll({
-                    where: {
-                        cat_id: req.params.id,
-                    }
-                }).then(posts =>{
-                    res.send({posts: posts})
-                })
-            } else {
-                res.send("no such category");
-            }
-
+        }).then(posts =>{
+            res.send({success: true, data: posts})
+        })
+    },
+    getAll: function (req, res) {
+        Post.findAll().then(posts => {
+            res.send({success: true, data: posts})
         })
     }
 }

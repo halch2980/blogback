@@ -19,21 +19,17 @@ const AuthController = {
 
                     }).then(user =>{
                         var token = jwt.sign({name: user.name, email: user.email}, process.env.JWT);
-                        File.mkdirSync('/Users');
-                        res.send({
-                            token: token,
-                            user_data: user,
-                        });
+                        res.send({success: true, data: {token: token, user_data: user}});
                     })
                     .catch (err => {
                         res
                             .status(400)
-                            .send(err);
+                            .send({success: false, error: err});
                     });
 
             }  else {
                 res
-                    .send(err)
+                    .send({success: false, error: err})
                     .status(400);
             }
         });
@@ -51,32 +47,22 @@ const AuthController = {
                 })
                     .then(user => {
                         if(user){
-                            var token = jwt.sign({name:user.name, email:user.email,},process.env.JWT);
-                            res.send({
-                                user: user,
-                                token: token,
-
-                            });
+                            var token = jwt.sign({name:user.name, email:user.email},process.env.JWT);
+                            res.send({success: true, data: {user: user, token: token}});
 
                         }else{
                             res
                                 .status(401)
-                                .send({
-                                    error:'Invalid password or email'
-                                });
+                                .send({success: true, error:'Invalid password or email'});
                         }
                     })
                     .catch( err => {
                         res.status(401);
-                        res.send({
-                            error:err
-                        })
+                        res.send({success: false, error: err})
                     });
             }else{
                 res.status(400);
-                res.send({
-                    error:err
-                })
+                res.send({success: false, error:err})
             }
         })
     },

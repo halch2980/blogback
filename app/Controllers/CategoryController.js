@@ -12,20 +12,16 @@ const CategoryController = {
                 Cat.create({
                     title: data.title,
                 }).then(cat => {
-                    res.send({
-                        cat: cat
-                    })
+                    res.send({success: true, data: cat})
                 }).catch(err => {
                     res
                         .status(400)
-                        .send({
-                            error: err,
-                        })
+                        .send({success: false, error: err})
                 })
             } else{
                 res
                     .status(400)
-                    .send({error: err});
+                    .send({success: false,error: err});
             }
         })
     },
@@ -36,24 +32,23 @@ const CategoryController = {
             }
         })
             .then(cat => {
-
                     if (cat) {
                         Joi.validate(req.body, Validator.catSchema, function (err, data) {
                             if (!err) {
                                 cat.update({
                                     title: req.body.title,
                                 });
-                                res.send(cat);
+                                res.send({success: true, data: cat});
                             } else {
                                 res
                                     .status(400)
-                                    .send({error: err});
+                                    .send({success: false, error: err});
                             }
                         })
                     }else {
                         res
                             .status(400)
-                            .send({error: "no such category"});
+                            .send({success: false, error: "no such category"});
                     }
             })
     },
@@ -65,11 +60,11 @@ const CategoryController = {
         }).then(cat => {
             if (cat){
                 cat.destroy({ force:true });
-                res.send({success: "category deleted",})
+                res.send({success: true, data: "category deleted",})
             } else{
                 res
                     .status(400)
-                    .send({error: "no such category"});
+                    .send({success:false, error: "no such category"});
             }
         })
     },
@@ -80,13 +75,11 @@ const CategoryController = {
             }
         }).then(cat => {
             if (cat){
-                res.send({
-                    category: cat,
-                });
+                res.send({success:true, dat: cat});
             } else {
                 res
                     .status(400)
-                    .send({error: "no such category"});
+                    .send({success: false, error: "no such category"});
             }
         })
     }
