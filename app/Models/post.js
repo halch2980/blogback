@@ -20,11 +20,6 @@ module.exports = function(sequelize , Sequelize){
             type: Sequelize.TEXT
         },
 
-        img: {
-            notEmpty: true,
-            type: Sequelize.STRING
-        },
-
         user_id: {
             notEmpty: true,
             type: Sequelize.INTEGER

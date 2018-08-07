@@ -1,4 +1,3 @@
-const model = require('../Models/index');
 const multer = require('multer');
 
 const ImageMiddleware = {

@@ -32,24 +32,24 @@ const CategoryController = {
             }
         })
             .then(cat => {
-                    if (cat) {
-                        Joi.validate(req.body, Validator.catSchema, function (err, data) {
-                            if (!err) {
-                                cat.update({
-                                    title: req.body.title,
-                                });
-                                res.send({success: true, data: cat});
-                            } else {
-                                res
-                                    .status(400)
-                                    .send({success: false, error: err});
-                            }
-                        })
-                    }else {
-                        res
-                            .status(400)
-                            .send({success: false, error: "no such category"});
-                    }
+                if (cat) {
+                    Joi.validate(req.body, Validator.catSchema, function (err, data) {
+                        if (!err) {
+                            cat.update({
+                                title: req.body.title,
+                            });
+                            res.send({success: true, data: cat});
+                        } else {
+                            res
+                                .status(400)
+                                .send({success: false, error: err});
+                        }
+                    })
+                }else {
+                    res
+                        .status(400)
+                        .send({success: false, error: "no such category"});
+                }
             })
     },
     delete: function (req, res) {
