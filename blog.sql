@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Авг 07 2018 г., 11:39
+-- Время создания: Авг 14 2018 г., 12:22
 -- Версия сервера: 10.1.34-MariaDB-1~xenial
 -- Версия PHP: 7.0.30-0ubuntu0.16.04.1
 
@@ -55,6 +55,16 @@ CREATE TABLE `comments` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `comments`
+--
+
+INSERT INTO `comments` (`id`, `comment`, `user_id`, `post_id`, `parent_id`, `created_at`, `updated_at`) VALUES
+(1, 'saedadsadasd', 37, 26, NULL, '2018-08-08 10:18:24', '2018-08-08 10:18:24'),
+(2, 'sadsad', 39, 25, NULL, '2018-08-08 10:18:24', '2018-08-08 13:12:31'),
+(3, 'saedadsadasd', 37, 26, NULL, '2018-08-08 10:18:24', '2018-08-08 10:18:24'),
+(4, 'sadsad', 39, 25, NULL, '2018-08-08 10:18:24', '2018-08-08 13:12:31');
 
 -- --------------------------------------------------------
 
@@ -115,7 +125,6 @@ CREATE TABLE `posts` (
   `id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `desc` text NOT NULL,
-  `img` varchar(255) NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `cat_id` int(11) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -126,26 +135,54 @@ CREATE TABLE `posts` (
 -- Дамп данных таблицы `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `desc`, `img`, `user_id`, `cat_id`, `created_at`, `updated_at`) VALUES
-(1, 'title', 'desc', '', 37, 9, '2018-07-30 07:07:45', '0000-00-00 00:00:00'),
-(2, 'title', 'desc', '', 37, 9, '2018-07-30 07:09:30', '0000-00-00 00:00:00'),
-(3, 'title', 'desc', '', 37, 9, '2018-07-30 07:10:07', '0000-00-00 00:00:00'),
-(4, 'title', 'desc', '', 37, 9, '2018-07-30 07:10:38', '0000-00-00 00:00:00'),
-(5, 'title', 'desc', '', 37, 9, '2018-07-30 07:11:51', '0000-00-00 00:00:00'),
-(6, 'title', 'desc', '', 37, 9, '2018-07-30 07:15:04', '0000-00-00 00:00:00'),
-(7, 'title', 'desc', '', 37, 9, '2018-07-30 07:15:26', '0000-00-00 00:00:00'),
-(8, 'title', 'desc', '', 37, 9, '2018-07-30 07:15:36', '0000-00-00 00:00:00'),
-(9, 'title', 'desc', '', 37, 9, '2018-07-30 07:15:50', '0000-00-00 00:00:00'),
-(10, 'title', 'desc', '', 37, 9, '2018-07-30 10:18:21', '0000-00-00 00:00:00'),
-(11, 'title', 'desc', '', 37, 9, '2018-07-30 10:20:31', '0000-00-00 00:00:00'),
-(12, 'title122', 'desc123', '', 37, 9, '2018-07-30 13:43:23', '2018-07-30 13:43:23'),
-(13, 'title', 'desc1', '', 37, 9, '2018-07-31 10:19:25', '0000-00-00 00:00:00'),
-(15, 'title', 'desc', '', 37, 9, '2018-08-01 11:38:56', '0000-00-00 00:00:00'),
-(16, 'title', 'desc', '', 37, 9, '2018-08-01 12:06:33', '0000-00-00 00:00:00'),
-(17, 'title', 'desc', '', 37, 9, '2018-08-01 12:47:48', '0000-00-00 00:00:00'),
-(18, 'title', 'desc', '', 37, 9, '2018-08-01 12:51:08', '0000-00-00 00:00:00'),
-(19, 'title', 'desc', '', 37, 9, '2018-08-01 12:52:49', '0000-00-00 00:00:00'),
-(20, 'title', 'desc', '', 37, 9, '2018-08-01 12:53:39', '0000-00-00 00:00:00');
+INSERT INTO `posts` (`id`, `title`, `desc`, `user_id`, `cat_id`, `created_at`, `updated_at`) VALUES
+(1, 'title', 'desc', 37, 9, '2018-07-30 07:07:45', '0000-00-00 00:00:00'),
+(2, 'title', 'desc', 37, 9, '2018-07-30 07:09:30', '0000-00-00 00:00:00'),
+(3, 'title', 'desc', 37, 9, '2018-07-30 07:10:07', '0000-00-00 00:00:00'),
+(4, 'title', 'desc', 37, 9, '2018-07-30 07:10:38', '0000-00-00 00:00:00'),
+(5, 'title', 'desc', 37, 9, '2018-07-30 07:11:51', '0000-00-00 00:00:00'),
+(6, 'title', 'desc', 37, 9, '2018-07-30 07:15:04', '0000-00-00 00:00:00'),
+(7, 'title', 'desc', 37, 9, '2018-07-30 07:15:26', '0000-00-00 00:00:00'),
+(8, 'title', 'desc', 37, 9, '2018-07-30 07:15:36', '0000-00-00 00:00:00'),
+(9, 'title', 'desc', 37, 9, '2018-07-30 07:15:50', '0000-00-00 00:00:00'),
+(10, 'title', 'desc', 37, 9, '2018-07-30 10:18:21', '0000-00-00 00:00:00'),
+(11, 'title', 'desc', 37, 9, '2018-07-30 10:20:31', '0000-00-00 00:00:00'),
+(12, 'title122', 'desc123', 37, 9, '2018-07-30 13:43:23', '2018-07-30 13:43:23'),
+(13, 'title', 'desc1', 37, 9, '2018-07-31 10:19:25', '0000-00-00 00:00:00'),
+(15, 'title', 'desc', 37, 9, '2018-08-01 11:38:56', '0000-00-00 00:00:00'),
+(16, 'title', 'desc', 37, 9, '2018-08-01 12:06:33', '0000-00-00 00:00:00'),
+(17, 'title', 'desc', 37, 9, '2018-08-01 12:47:48', '0000-00-00 00:00:00'),
+(18, 'title', 'desc', 37, 9, '2018-08-01 12:51:08', '0000-00-00 00:00:00'),
+(19, 'title', 'desc', 37, 9, '2018-08-01 12:52:49', '0000-00-00 00:00:00'),
+(20, 'title', 'desc', 37, 9, '2018-08-01 12:53:39', '0000-00-00 00:00:00'),
+(21, 'title', 'desc', 39, 9, '2018-07-30 07:07:45', '0000-00-00 00:00:00'),
+(22, 'title', 'desc', 40, 9, '2018-07-30 07:09:30', '0000-00-00 00:00:00'),
+(23, 'title', 'desc', 41, 9, '2018-07-30 07:10:07', '0000-00-00 00:00:00'),
+(24, 'title', 'desc', 39, 9, '2018-07-30 07:10:38', '0000-00-00 00:00:00'),
+(25, 'title', 'desc', 40, 9, '2018-07-30 07:11:51', '0000-00-00 00:00:00'),
+(26, 'title', 'desc', 40, 9, '2018-07-30 07:15:04', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `subscribers`
+--
+
+CREATE TABLE `subscribers` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `sub_id` int(11) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `subscribers`
+--
+
+INSERT INTO `subscribers` (`id`, `user_id`, `sub_id`, `created_at`, `updated_at`) VALUES
+(3, 41, 37, '2018-08-08 10:17:25', '2018-08-08 10:17:25'),
+(4, 40, 37, '2018-08-08 10:17:25', '2018-08-08 10:17:25');
 
 -- --------------------------------------------------------
 
@@ -168,7 +205,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `name`, `admin`, `created_at`, `updated_at`) VALUES
-(37, 'halch@gmail.com', '$2b$10$5Pow7oRVT.9f0c3qF8ww8OUR8GTlYGGu.vM1BshCmq9.xNeAtMC1G', 'Halch', 1, '2018-07-24 10:07:03', '2018-07-31 11:46:44');
+(37, 'halch@gmail.com', '$2b$10$5Pow7oRVT.9f0c3qF8ww8OUR8GTlYGGu.vM1BshCmq9.xNeAtMC1G', 'Halch', 1, '2018-07-24 10:07:03', '2018-07-31 11:46:44'),
+(39, 'halch1@gmail.com', '$2b$10$5Pow7oRVT.9f0c3qF8ww8OUR8GTlYGGu.vM1BshCmq9.xNeAtMC1G', 'Halch', 0, '2018-07-24 10:07:03', '2018-07-31 11:46:44'),
+(40, 'halch2@gmail.com', '$2b$10$5Pow7oRVT.9f0c3qF8ww8OUR8GTlYGGu.vM1BshCmq9.xNeAtMC1G', 'Halch', 1, '2018-07-24 10:07:03', '2018-07-31 11:46:44'),
+(41, 'halch3@gmail.com', '$2b$10$5Pow7oRVT.9f0c3qF8ww8OUR8GTlYGGu.vM1BshCmq9.xNeAtMC1G', 'Halch', 0, '2018-07-24 10:07:03', '2018-07-31 11:46:44');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `viewed`
+--
+
+CREATE TABLE `viewed` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `views` int(11) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Индексы сохранённых таблиц
@@ -208,11 +263,27 @@ ALTER TABLE `posts`
   ADD KEY `cat_id` (`cat_id`);
 
 --
+-- Индексы таблицы `subscribers`
+--
+ALTER TABLE `subscribers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `sub_id` (`sub_id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Индексы таблицы `viewed`
+--
+ALTER TABLE `viewed`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `post_id` (`post_id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -227,7 +298,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `files`
 --
@@ -237,12 +308,22 @@ ALTER TABLE `files`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT для таблицы `subscribers`
+--
+ALTER TABLE `subscribers`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT для таблицы `viewed`
+--
+ALTER TABLE `viewed`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -268,6 +349,20 @@ ALTER TABLE `files`
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `subscribers`
+--
+ALTER TABLE `subscribers`
+  ADD CONSTRAINT `subscribers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `subscribers_ibfk_2` FOREIGN KEY (`sub_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `viewed`
+--
+ALTER TABLE `viewed`
+  ADD CONSTRAINT `viewed_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `viewed_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
