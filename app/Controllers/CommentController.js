@@ -15,6 +15,7 @@ const CommentController = {
                     comment: data.comment,
                     post_id: data.post_id,
                     user_id: User_id.id,
+                    parent_id: data.parent_id
                 }).then(comment => {
                     res.send({success: true, comment: comment})
                 }).catch(err => {
@@ -42,6 +43,7 @@ const CommentController = {
                             comment: data.comment,
                             user_id: data.user.id,
                             post_id: data.post.id,
+                            parent_id: data.parent_id
                         }).then(comment => {
                             res.send({success: true, comment: comment});
                         }).catch(err => {

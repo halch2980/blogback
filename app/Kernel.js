@@ -1,12 +1,15 @@
 const Kernel = {
+
     Controllers : {
         AuthController: require('./Controllers/AuthController'),
         CatController: require('./Controllers/CategoryController'),
         PostController: require('./Controllers/PostController'),
         PostImgController: require('./Controllers/PostImgController'),
         CommentController: require('./Controllers/CommentController'),
-
+        SubController: require('./Controllers/SubController'),
+        FeedController: require('./Controllers/FeedConroller')
     },
+
     Middlewares : {
         AuthMiddleware: require('./Middlewares/AuthMiddleware'),
         ImageMiddleware: require('./Middlewares/ImageMiddleware'),

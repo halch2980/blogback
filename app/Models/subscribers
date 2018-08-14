@@ -2,31 +2,22 @@ module.exports = function(sequelize , Sequelize){
     const options = {
         timestamps: false
     };
-    const Comment = sequelize.define('comments', {
+    const Sub = sequelize.define('subscribers', {
 
         id: {
             type: Sequelize.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
-        },
-
-        comment: {
-            type: Sequelize.STRING,
-            notEmpty: true,
-        },
-
-        post_id: {
-            type: Sequelize.INTEGER,
-            notEmpty: true
+            primaryKey: true,
+            autoIncrement: true
         },
 
         user_id: {
             type: Sequelize.INTEGER,
-            notEmpty: true
+            notEmpty: true,
         },
 
-        parent_id: {
+        sub_id: {
             type: Sequelize.INTEGER,
+            notEmpty: true,
         },
 
         created_at: Sequelize.DATE,
@@ -35,5 +26,5 @@ module.exports = function(sequelize , Sequelize){
 
     }, options);
 
-    return Comment;
+    return Sub;
 };

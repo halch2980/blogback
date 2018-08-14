@@ -66,9 +66,5 @@ const AuthController = {
             }
         })
     },
-    test: function (req, res) {
-        const authorized_user= req.auth;
-        res.send(authorized_user);
-    }
 }
 module.exports = AuthController;

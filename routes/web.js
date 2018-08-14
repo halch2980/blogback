@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Kernel = require('../app/Kernel');
 
+
 // ROUTES FOR AUTH
 
 router.post('/registration', Kernel.Controllers.AuthController.registration);
@@ -38,8 +39,31 @@ router.get('/posts/user', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Control
 
 //ROUTES FOR COMMENTS
 
-router.post('post/:post_id/comment/:comment_id/')
+router.post('/comment', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.CommentController.create);
+router.put('/comment/:comment_id', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.CommentController.update);
+router.delete('/comment/:comment_id', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.CommentController.delete);
+router.get('/comment/:comment_id', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.CommentController.get);
 
 //------
+
+//ROUTES FOR SUBSCRIBERS
+
+router.post('/subscribe/user/', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.SubController.subscribe);
+router.delete('/unsubscribe/user', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.SubController.unsubscribe);
+
+router.post('/followers', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.SubController.followers);
+router.post('/following', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.SubController.following);
+
+//------
+
+//ROUTES FOR FEED
+
+router.get('/feed/:offset', Kernel.Middlewares.AuthMiddleware.auth, Kernel.Controllers.FeedController.get);
+
+//------
+
+
+
+
 
 module.exports = router;

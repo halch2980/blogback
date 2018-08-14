@@ -33,11 +33,13 @@ const Validator = {
         comment: Joi.string().alphanum().required(),
         user_id: Joi.number().integer().required(),
         post_id: Joi.number().integer().required(),
+        parent_id: Joi.number().integer(),
     }),
     commentUpdateSchema: Joi.object().keys({
         comment: Joi.string().alphanum(),
         user_id: Joi.number().integer(),
         post_id: Joi.number().integer(),
+        parent_id: Joi.number().integer(),
     }),
 
 }
